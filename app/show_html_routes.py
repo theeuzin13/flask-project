@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect
+import uuid
+from app.extensions import db
 from flask_jwt_extended import jwt_required
 from app.models import Show, Client, Place
 

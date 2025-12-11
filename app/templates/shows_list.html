@@ -3,8 +3,10 @@
 
 <h2>Shows</h2>
 
-<div class="d-flex mb-3">
+<div class="d-flex align-items-center gap-3 mb-3">
     <a href="/shows/new" class="btn btn-success">+ Novo Show</a>
+    <a href="/clients" class="btn btn-success">+ Clientes</a>
+    <a href="/places" class="btn btn-success">+ Locais</a>
 </div>
 
 <form class="row mb-3" method="GET">
@@ -48,7 +50,7 @@
             <td>{% if s.paid %}✔️{% else %}❌{% endif %}</td>
             <td>
                 <a href="/shows/edit/{{ s.uuid }}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="/shows/pay/{{ s.uuid }}" class="btn btn-success btn-sm">Pagar</a>
+                <a href="/shows/pay/{{ s.uuid }}" class="btn btn-success btn-sm">Pago</a>
                 <a href="/shows/delete/{{ s.uuid }}" class="btn btn-danger btn-sm">Excluir</a>
             </td>
         </tr>

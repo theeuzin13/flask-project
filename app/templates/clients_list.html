@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Clientes</h2>
-<a class="btn btn-success mb-3" href="/clients/new">+ Novo Cliente</a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    
+    <a href="/clients/new" class="btn btn-success">+ Novo Cliente</a>
+
+    <a href="/shows" class="btn btn-danger">← Voltar</a>
+
+</div>
 
 <table class="table table-dark table-striped">
     <thead>
