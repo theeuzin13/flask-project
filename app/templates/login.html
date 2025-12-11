@@ -1,1 +1,23 @@
-<h1>Login</h1>
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+
+        <h3 class="text-center mb-3">Login</h3>
+
+        <form method="POST">
+            <input name="email" class="form-control mb-2" placeholder="E-mail" required>
+            <input name="password" type="password" class="form-control mb-3" placeholder="Senha" required>
+
+            <button class="btn btn-primary w-100">Entrar</button>
+        </form>
+
+        <p class="mt-2 text-center">
+            <a href="/auth/register">Criar conta</a>
+        </p>
+
+    </div>
+</div>
+
+{% endblock %}

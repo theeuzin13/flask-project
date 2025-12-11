@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Locais</h2>
+<a class="btn btn-success mb-3" href="/places/new">+ Novo Local</a>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr><th>Nome</th><th>Endereço</th><th>Cidade</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+        {% for p in places %}
+        <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.endereco }}</td>
+            <td>{{ p.cidade }}</td>
+            <td>{{ p.estado }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

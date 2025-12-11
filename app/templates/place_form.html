@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Novo Local</h2>
+
+<form method="POST">
+    <label>Nome</label>
+    <input class="form-control mb-2" name="name">
+
+    <label>Endereço</label>
+    <input class="form-control mb-2" name="endereco">
+
+    <label>Cidade</label>
+    <input class="form-control mb-2" name="cidade">
+
+    <label>Estado</label>
+    <input class="form-control mb-3" name="estado">
+
+    <button class="btn btn-primary w-100">Salvar</button>
+</form>
+{% endblock %}

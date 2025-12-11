@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Novo Cliente</h2>
+
+<form method="POST">
+    <label>Nome</label>
+    <input class="form-control mb-2" name="name">
+
+    <label>Telefone</label>
+    <input class="form-control mb-2" name="phone">
+
+    <label>Email</label>
+    <input class="form-control mb-3" name="email">
+
+    <button class="btn btn-primary w-100">Salvar</button>
+</form>
+{% endblock %}

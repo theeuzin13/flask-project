@@ -1,1 +1,59 @@
-<h1>Shows</h1>
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Shows</h2>
+
+<div class="d-flex mb-3">
+    <a href="/shows/new" class="btn btn-success">+ Novo Show</a>
+</div>
+
+<form class="row mb-3" method="GET">
+    <div class="col-md-3">
+        <input type="date" name="date" class="form-control" value="{{ request.args.get('date','') }}">
+    </div>
+
+    <div class="col-md-3">
+        <select name="client" class="form-control">
+            <option value="">Cliente</option>
+            {% for c in clients %}
+                <option value="{{ c.uuid }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th>Local</th>
+            <th>Valor</th>
+            <th>Pago</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for s in shows %}
+        <tr>
+            <td>{{ s.show_date }}</td>
+            <td>{{ s.client.name }}</td>
+            <td>{{ s.place.name }}</td>
+            <td>R$ {{ s.value }}</td>
+            <td>{% if s.paid %}✔️{% else %}❌{% endif %}</td>
+            <td>
+                <a href="/shows/edit/{{ s.uuid }}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="/shows/pay/{{ s.uuid }}" class="btn btn-success btn-sm">Pagar</a>
+                <a href="/shows/delete/{{ s.uuid }}" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
