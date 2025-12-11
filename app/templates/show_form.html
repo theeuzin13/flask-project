@@ -25,6 +25,11 @@
 
     <label>Cliente</label>
     <select name="client" class="form-control mb-2" required>
+        
+        {% if not show %}
+            <option value="">Selecione um cliente</option>
+        {% endif %}
+
         {% for c in clients %}
         <option 
             value="{{ c.uuid }}"
@@ -37,6 +42,11 @@
 
     <label>Local</label>
     <select name="place" class="form-control mb-3" required>
+        
+        {% if not show %}
+            <option value="">Selecione um local</option>
+        {% endif %}
+
         {% for p in places %}
         <option 
             value="{{ p.uuid }}"
@@ -56,6 +66,7 @@
         value="{{ show.value if show else '' }}"
         required
     >
+
     <div class="d-flex gap-3 mt-4">
         <button class="btn btn-primary flex-fill">Salvar</button>
         <a href="/shows" class="btn btn-danger flex-fill">← Voltar</a>

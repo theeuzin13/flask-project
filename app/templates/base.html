@@ -7,12 +7,11 @@
 </head>
 <body class="bg-dark text-light">
 
-<nav class="navbar navbar-dark bg-black px-4">
-    <a class="navbar-brand" href="/shows">🎤 Show Manager</a>
+<nav class="navbar d-flex align-items-center navbar-dark bg-black px-4">
+    <a class="navbar-brand" href="/shows">Gerenciamento de Shows</a>
 
     {% if session.user %}
-    <span>{{ session.user.name }}</span>
-    <a href="/auth/logout" class="btn btn-danger btn-sm">Sair</a>
+    <a href="/logout" class="btn btn-danger btn-sm">Sair</a>
     {% endif %}
 </nav>
 

@@ -36,6 +36,13 @@ def create_show_html():
 
     return redirect("/shows")
 
+@html_show_bp.get("/shows/new")
+@jwt_required()
+def new_show_page():
+    clients = Client.query.all()
+    places = Place.query.all()
+    return render_template("show_form.html", show=None, clients=clients, places=places)
+
 @html_show_bp.get("/shows/<id>/edit")
 @jwt_required()
 def edit_show_page(id):
