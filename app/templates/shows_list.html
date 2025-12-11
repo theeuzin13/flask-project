@@ -49,9 +49,19 @@
             <td>R$ {{ s.value }}</td>
             <td>{% if s.paid %}✔️{% else %}❌{% endif %}</td>
             <td>
-                <a href="/shows/edit/{{ s.uuid }}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="/shows/pay/{{ s.uuid }}" class="btn btn-success btn-sm">Pago</a>
-                <a href="/shows/delete/{{ s.uuid }}" class="btn btn-danger btn-sm">Excluir</a>
+                <a href="/shows/{{ s.uuid }}/edit" class="btn btn-warning btn-sm">Editar</a>
+
+                <button 
+                    class="btn btn-success btn-sm"
+                    onclick="markPaid('{{ s.uuid }}', this)"
+                >
+                    Pago
+                </button>
+
+                <form action="/shows/{{ s.uuid }}/delete" method="POST" style="display:inline;" 
+                    onsubmit="return confirm('Deseja excluir?');">
+                    <button class="btn btn-danger btn-sm">Excluir</button>
+                </form>
             </td>
         </tr>
         {% endfor %}

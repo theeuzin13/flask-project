@@ -1,34 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>{{ 'Editar' if show else 'Novo Show' }}</h2>
+<h2>{{ 'Editar Show' if show else 'Novo Show' }}</h2>
 
-<form method="POST" action="/shows/new">
+<form method="POST" action="{{ '/shows/' ~ show.uuid ~ '/edit' if show else '/shows/new' }}">
 
     <label>Data</label>
-    <input type="date" name="show_date" class="form-control mb-2" value="{{ show.show_date if show else '' }}" required>
+    <input 
+        type="date" 
+        name="show_date" 
+        class="form-control mb-2"
+        value="{{ show.show_date.strftime('%Y-%m-%d') if show else '' }}"
+        required
+    >
 
     <label>Hora</label>
-    <input type="time" name="show_hour" class="form-control mb-2" value="{{ show.show_hour if show else '' }}" required>
+    <input 
+        type="time" 
+        name="show_hour" 
+        class="form-control mb-2"
+        value="{{ show.show_hour.strftime('%H:%M') if show else '' }}"
+        required
+    >
 
     <label>Cliente</label>
-    <select name="client" class="form-control mb-2">
+    <select name="client" class="form-control mb-2" required>
         {% for c in clients %}
-        <option value="{{ c.uuid }}">{{ c.name }}</option>
+        <option 
+            value="{{ c.uuid }}"
+            {% if show and show.clients_uuid == c.uuid %}selected{% endif %}
+        >
+            {{ c.name }}
+        </option>
         {% endfor %}
     </select>
 
     <label>Local</label>
-    <select name="place" class="form-control mb-3">
+    <select name="place" class="form-control mb-3" required>
         {% for p in places %}
-        <option value="{{ p.uuid }}">{{ p.name }}</option>
+        <option 
+            value="{{ p.uuid }}"
+            {% if show and show.places_uuid == p.uuid %}selected{% endif %}
+        >
+            {{ p.name }}
+        </option>
         {% endfor %}
     </select>
 
     <label>Valor</label>
-    <input type="number" step="0.01" name="value" class="form-control mb-3" value="{{ show.value if show else '' }}">
-
-    <button class="btn btn-primary w-100">Salvar</button>
+    <input 
+        type="number" 
+        step="0.01" 
+        name="value" 
+        class="form-control mb-3"
+        value="{{ show.value if show else '' }}"
+        required
+    >
+    <div class="d-flex gap-3 mt-4">
+        <button class="btn btn-primary flex-fill">Salvar</button>
+        <a href="/shows" class="btn btn-danger flex-fill">← Voltar</a>
+    </div>
 
 </form>
 

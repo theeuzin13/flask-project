@@ -10,3 +10,4 @@ class Config:
     JWT_ACCESS_COOKIE_PATH = "/"
     JWT_COOKIE_SECURE = False
     JWT_COOKIE_CSRF_PROTECT = False
+    JWT_ACCESS_TOKEN_EXPIRES = False

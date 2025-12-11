@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect
 import uuid
 from app.extensions import db
 from flask_jwt_extended import jwt_required
-from app.models import Show, Client, Place
+from app.models import Show, Client, Place, Paid
 
 html_show_bp = Blueprint("html_shows", __name__)
 
@@ -16,13 +16,6 @@ def shows_page():
                            shows=shows,
                            clients=clients,
                            places=places)
-
-@html_show_bp.get("/shows/new")
-@jwt_required()
-def new_show_page():
-    clients = Client.query.all()
-    places = Place.query.all()
-    return render_template("show_form.html", show=None, clients=clients, places=places)
 
 @html_show_bp.post("/shows/new")
 @jwt_required()
@@ -42,3 +35,40 @@ def create_show_html():
     db.session.commit()
 
     return redirect("/shows")
+
+@html_show_bp.get("/shows/<id>/edit")
+@jwt_required()
+def edit_show_page(id):
+    show = Show.query.get_or_404(id)
+    clients = Client.query.all()
+    places = Place.query.all()
+    return render_template("show_form.html", show=show, clients=clients, places=places)
+
+
+@html_show_bp.post("/shows/<id>/edit")
+@jwt_required()
+def update_show_html(id):
+    show = Show.query.get_or_404(id)
+    data = request.form
+
+    show.show_date = data["show_date"]
+    show.show_hour = data["show_hour"]
+    show.value = data["value"]
+    show.clients_uuid = data["client"]
+    show.places_uuid = data["place"]
+
+    db.session.commit()
+    return redirect("/shows")
+
+@html_show_bp.post("/shows/<id>/delete")
+def delete_show_html(id):
+    Paid.query.filter_by(show_uuid=id).delete()
+
+    show = Show.query.get_or_404(id)
+    db.session.delete(show)
+    db.session.commit()
+
+    return redirect("/shows")
+
+
+
