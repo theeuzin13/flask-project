@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Clientes</h2>
+
+<h2>Usuários</h2>
 
 <form class="row mb-3" method="GET">
     <div class="col-md-4">
@@ -16,35 +17,33 @@
     </div>
 </form>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    
-    <a href="/clients/new" class="btn btn-success">+ Novo Cliente</a>
-
-</div>
-
 <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>Nome</th>
-            <th>Telefone</th>
             <th>Email</th>
+            <th>Data de Criação</th>
             <th>Ações</th>
         </tr>
-
     </thead>
+
     <tbody>
-        {% for c in clients %}
+        {% for u in users %}
         <tr>
-            <td>{{ c.name }}</td>
-            <td>{{ c.phone }}</td>
-            <td>{{ c.email }}</td>
+            <td>{{ u.name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.created_at }}</td>
             <td>
-                <a href="/clients/{{ c.uuid }}/edit" class="btn btn-warning btn-sm">Editar</a>
-                <form action="/clients/{{ c.uuid }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja deletar este cliente?');">
-                    <button class="btn btn-danger btn-sm">Deletar</button>
+                <a href="/users/{{ u.uuid }}/edit" class="btn btn-warning btn-sm">Editar</a>
+
+                <form action="/users/{{ u.uuid }}/delete" method="POST" style="display:inline;" 
+                    onsubmit="return confirm('Deseja excluir este usuário?');">
+                    <button class="btn btn-danger btn-sm">Excluir</button>
                 </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
 {% endblock %}

@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, flash
 from flask_jwt_extended import jwt_required
 from app.extensions import db
-from app.models import Client
+from app.models import Client, Show
 import uuid
 
 html_clients_bp = Blueprint("html_clients", __name__)
@@ -9,7 +9,16 @@ html_clients_bp = Blueprint("html_clients", __name__)
 @html_clients_bp.get("/clients")
 @jwt_required()
 def list_clients():
-    clients = Client.query.all()
+    search = request.args.get('search', '')
+    query = Client.query
+    
+    if search:
+        query = query.filter(
+            (Client.name.ilike(f'%{search}%')) | 
+            (Client.email.ilike(f'%{search}%'))
+        )
+    
+    clients = query.all()
     return render_template("clients_list.html", clients=clients)
 
 @html_clients_bp.get("/clients/new")
@@ -52,6 +61,14 @@ def edit_client(client_uuid):
 @jwt_required()
 def delete_client(client_uuid):
     client = Client.query.filter_by(uuid=client_uuid).first_or_404()
+    
+    # Verificar se o cliente está vinculado a algum show
+    show_linked = Show.query.filter_by(clients_uuid=client_uuid).first()
+    
+    if show_linked:
+        flash("Não é possível apagar um cliente que está vinculado a um show!", "error")
+        return redirect("/clients")
+    
     db.session.delete(client)
     db.session.commit()
     return redirect("/clients")

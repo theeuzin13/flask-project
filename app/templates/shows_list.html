@@ -7,20 +7,12 @@
     <a href="/shows/new" class="btn btn-success">+ Novo Show</a>
     <a href="/clients" class="btn btn-success">+ Clientes</a>
     <a href="/places" class="btn btn-success">+ Locais</a>
+    <a href="/users/list" class="btn btn-success">+ Usuários</a>
 </div>
 
 <form class="row mb-3" method="GET">
     <div class="col-md-3">
-        <input type="date" name="date" class="form-control" value="{{ request.args.get('date','') }}">
-    </div>
-
-    <div class="col-md-3">
-        <select name="client" class="form-control">
-            <option value="">Cliente</option>
-            {% for c in clients %}
-                <option value="{{ c.uuid }}">{{ c.name }}</option>
-            {% endfor %}
-        </select>
+        <input type="text" name="search" class="form-control" placeholder="Buscar por cliente ou local" value="{{ request.args.get('search','') }}">
     </div>
 
     <div class="col-md-2">
@@ -32,6 +24,7 @@
     <thead>
         <tr>
             <th>Data</th>
+            <th>Hora</th>
             <th>Cliente</th>
             <th>Local</th>
             <th>Valor</th>
@@ -44,6 +37,7 @@
         {% for s in shows %}
         <tr>
             <td>{{ s.show_date }}</td>
+            <td>{{ s.show_hour }}</td>
             <td>{{ s.client.name }}</td>
             <td>{{ s.place.name }}</td>
             <td>R$ {{ s.value }}</td>

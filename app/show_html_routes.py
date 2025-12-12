@@ -9,7 +9,16 @@ html_show_bp = Blueprint("html_shows", __name__)
 @html_show_bp.get("/shows")
 @jwt_required()
 def shows_page():
-    shows = Show.query.all()
+    search = request.args.get('search', '')
+    query = Show.query
+    
+    if search:
+        query = query.join(Client, Show.clients_uuid == Client.uuid, isouter=True).join(Place, Show.places_uuid == Place.uuid, isouter=True).filter(
+            (Client.name.ilike(f'%{search}%')) | 
+            (Place.name.ilike(f'%{search}%'))
+        ).distinct()
+    
+    shows = query.all()
     clients = Client.query.all()
     places = Place.query.all()
     return render_template("shows_list.html",

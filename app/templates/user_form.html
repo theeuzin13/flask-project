@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{% if user %}Editar Usuário{% else %}Novo Usuário{% endif %}</h2>
+
+<form method="POST">
+    <label>Nome</label>
+    <input class="form-control mb-2" name="name" value="{{ user.name if user else '' }}" required>
+
+    <label>Email</label>
+    <input type="email" class="form-control mb-2" name="email" value="{{ user.email if user else '' }}" required>
+
+    {% if not user %}
+    <label>Senha</label>
+    <input type="password" class="form-control mb-2" name="password" required>
+
+    <label>Telefone</label>
+    <input class="form-control mb-2" name="phone">
+
+    <label>Função</label>
+    <input class="form-control mb-3" name="role">
+    {% endif %}
+
+    <div class="d-flex gap-3 mt-4">
+        <button class="btn btn-primary flex-fill">Salvar</button>
+        <a href="/users/list" class="btn btn-danger flex-fill">← Voltar</a>
+    </div>
+</form>
+{% endblock %}

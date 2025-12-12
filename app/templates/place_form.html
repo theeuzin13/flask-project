@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Novo Local</h2>
+<h2>{% if place %}Editar Local{% else %}Novo Local{% endif %}</h2>
 
 <form method="POST">
     <label>Nome</label>
-    <input class="form-control mb-2" name="name">
+    <input class="form-control mb-2" name="name" value="{{ place.name or '' }}">
 
     <label>Endereço</label>
-    <input class="form-control mb-2" name="endereco">
+    <input class="form-control mb-2" name="endereco" value="{{ place.endereco or '' }}">
 
     <label>Cidade</label>
-    <input class="form-control mb-2" name="cidade">
+    <input class="form-control mb-2" name="cidade" value="{{ place.cidade or '' }}">
 
     <label>Estado</label>
-    <input class="form-control mb-3" name="estado">
+    <input class="form-control mb-3" name="estado" value="{{ place.estado or '' }}">
 
     <div class="d-flex gap-3 mt-4">
         <button class="btn btn-primary flex-fill">Salvar</button>
-        <a href="/shows" class="btn btn-danger flex-fill">← Voltar</a>
+        <a href="/places" class="btn btn-danger flex-fill">← Voltar</a>
     </div>
 </form>
 {% endblock %}

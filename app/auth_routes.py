@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, session
 from app.models import User
 from app.extensions import db
 from flask_jwt_extended import create_access_token, set_access_cookies, unset_jwt_cookies
@@ -25,6 +25,7 @@ def login():
     token = create_access_token(identity=user.uuid)
     resp = redirect("/shows")
     set_access_cookies(resp, token)
+    session['user'] = user.uuid
 
     return resp
 
@@ -53,6 +54,7 @@ def register():
 
 @auth_bp.get("/logout")
 def logout():
+    session.pop('user', None)
     resp = redirect("/login")
     unset_jwt_cookies(resp)
     return resp
