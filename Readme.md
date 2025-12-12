@@ -13,3 +13,7 @@
 
 >- docker compose up --build -d
 >- cloudflared tunnel run flask-project || cloudflared tunnel --config ~/.cloudflared/config.yml run flask-project
+
+## Endpoint
+
+>- https://dev.agendfy.shop/login
