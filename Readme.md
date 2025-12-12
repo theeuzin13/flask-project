@@ -8,3 +8,8 @@
 >- flask db init
 >- flask db migrate -m "initial tables"
 >- flask db upgrade
+
+## To up with cloudflared tunnel
+
+>- docker compose up --build -d
+>- cloudflared tunnel run flask-project || cloudflared tunnel --config ~/.cloudflared/config.yml run flask-project
