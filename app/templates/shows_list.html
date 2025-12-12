@@ -47,7 +47,7 @@
             <td>{{ s.client.name }}</td>
             <td>{{ s.place.name }}</td>
             <td>R$ {{ s.value }}</td>
-            <td>{% if s.paid %}✔️{% else %}❌{% endif %}</td>
+            <td id="paid-{{ s.uuid }}">{% if s.paid %}✔️{% else %}❌{% endif %}</td>
             <td>
                 <a href="/shows/{{ s.uuid }}/edit" class="btn btn-warning btn-sm">Editar</a>
 
@@ -67,5 +67,34 @@
         {% endfor %}
     </tbody>
 </table>
+
+<script>
+async function markPaid(id, button) {
+    if (!confirm("Marcar este show como pago?")) return;
+
+    button.disabled = true;
+    button.innerText = "Processando...";
+
+    const response = await fetch(`/shows/${id}/pay`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("access_token")
+        }
+    });
+
+    if (response.ok) {
+        button.innerText = "Pago ✔";
+        button.classList.remove("btn-success");
+        button.classList.add("btn-secondary");
+
+        document.getElementById("paid-" + id).innerHTML = "✔️";
+    } else {
+        button.disabled = false;
+        button.innerText = "Pago";
+        alert("Erro ao marcar como pago.");
+    }
+}
+</script>
 
 {% endblock %}

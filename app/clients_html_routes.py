@@ -30,3 +30,28 @@ def create_client():
     db.session.add(client)
     db.session.commit()
     return redirect("/clients")
+
+@html_clients_bp.get("/clients/<client_uuid>/edit")
+@jwt_required()
+def edit_client_page(client_uuid):
+    client = Client.query.filter_by(uuid=client_uuid).first_or_404()
+    return render_template("client_form.html", client=client)
+
+@html_clients_bp.post("/clients/<client_uuid>/edit")
+@jwt_required()
+def edit_client(client_uuid):
+    client = Client.query.filter_by(uuid=client_uuid).first_or_404()
+    data = request.form
+    client.name = data["name"]
+    client.phone = data["phone"]
+    client.email = data["email"]
+    db.session.commit()
+    return redirect("/clients")
+
+@html_clients_bp.post("/clients/<client_uuid>/delete")
+@jwt_required()
+def delete_client(client_uuid):
+    client = Client.query.filter_by(uuid=client_uuid).first_or_404()
+    db.session.delete(client)
+    db.session.commit()
+    return redirect("/clients")

@@ -11,7 +11,13 @@
 
 <table class="table table-dark table-striped">
     <thead>
-        <tr><th>Nome</th><th>Telefone</th><th>Email</th></tr>
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+
     </thead>
     <tbody>
         {% for c in clients %}
@@ -19,6 +25,11 @@
             <td>{{ c.name }}</td>
             <td>{{ c.phone }}</td>
             <td>{{ c.email }}</td>
+            <td>
+                <a href="/clients/{{ c.uuid }}/edit" class="btn btn-warning btn-sm">Editar</a>
+                <form action="/clients/{{ c.uuid }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja deletar este cliente?');">
+                    <button class="btn btn-danger btn-sm">Deletar</button>
+                </form>
         </tr>
         {% endfor %}
     </tbody>
